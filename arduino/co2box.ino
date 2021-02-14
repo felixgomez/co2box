@@ -9,9 +9,7 @@
 #include <Wire.h>
 #endif
 
-
 // CO2 sensor
-
 const int CO2_SENSOR_RX_PIN = 3;
 const int CO2_SENSOR_TX_PIN = 2;
 const int CALIBRATION_BUTTON_PIN = 12;
@@ -29,9 +27,7 @@ const byte readCO2[] = {0xFF, 0x01, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x79};
 
 SoftwareSerial CO2Sensor(CO2_SENSOR_RX_PIN, CO2_SENSOR_TX_PIN);
 
-
 // DHT sensor
-
 const int DHT_PIN = 5;
 const int DHT_TYPE = DHT22;
 
@@ -42,9 +38,7 @@ float humidity;
 char temperatureAsChar[5];
 char humidityAsChar[5];
 
-
 // Semaphore
-
 const int SEMAPHORE_RED_PIN = 8;
 const int SEMAPHORE_ORANGE_PIN = 9;
 const int SEMAPHORE_GREEN_PIN = 11;
@@ -52,15 +46,12 @@ const int SEMAPHORE_GREEN_PIN = 11;
 const int CO2_LIMIT_ORANGE = 600;
 const int CO2_LIMIT_RED = 800;
 
-
 // OLED
-
 boolean toggleOLEDMarker = false;
 
 U8G2_SH1106_128X64_NONAME_1_HW_I2C u8g2(U8G2_R0, U8X8_PIN_NONE);
 
 void draw(int co2ppm, float temperature, float humidity) {
-
   dtostrf(co2ppm, 4, 0, co2ppmAsChar);
   dtostrf(temperature, 2, 1, temperatureAsChar);
   dtostrf(humidity, 2, 1, humidityAsChar);
@@ -89,7 +80,6 @@ void draw(int co2ppm, float temperature, float humidity) {
 }
 
 void changeSemaphore(int co2ppm) {
-
   digitalWrite(SEMAPHORE_RED_PIN, LOW);
   digitalWrite(SEMAPHORE_ORANGE_PIN, LOW);
   digitalWrite(SEMAPHORE_GREEN_PIN, LOW);
@@ -108,7 +98,6 @@ void changeSemaphore(int co2ppm) {
 }
 
 int readCO2ppm() {
-
   CO2Sensor.write(readCO2, 9);
   delay(500);
   CO2Sensor.readBytes(bufferCO2, 9);
@@ -144,7 +133,6 @@ void setup(void) {
 }
 
 void loop(void) {
-
   co2ppm = readCO2ppm();
   humidity = dht.readHumidity();
   temperature = dht.readTemperature();
